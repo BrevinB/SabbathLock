@@ -165,7 +165,7 @@ struct PaywallView: View {
             }
             .padding()
             .frame(maxWidth: .infinity)
-            .background(.blue.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
+            .background(.indigo.opacity(0.1), in: RoundedRectangle(cornerRadius: 12))
         }
         .buttonStyle(.plain)
         .disabled(premiumManager.isLoading)

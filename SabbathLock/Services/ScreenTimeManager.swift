@@ -133,10 +133,37 @@ class ScreenTimeManager: ObservableObject {
         activitySelection.categoryTokens.count
     }
 
+    /// Check how many web domains are selected
+    var selectedWebDomainCount: Int {
+        activitySelection.webDomainTokens.count
+    }
+
+    /// Total number of individual items selected across all types
+    var totalSelectionCount: Int {
+        selectedAppCount + selectedCategoryCount + selectedWebDomainCount
+    }
+
     /// Whether any apps or categories have been selected
     var hasSelection: Bool {
         !activitySelection.applicationTokens.isEmpty ||
         !activitySelection.categoryTokens.isEmpty ||
         !activitySelection.webDomainTokens.isEmpty
+    }
+
+    /// Human-readable summary of the current selection
+    var selectionSummary: String {
+        guard hasSelection else { return "No apps selected" }
+
+        var parts: [String] = []
+        if selectedAppCount > 0 {
+            parts.append("\(selectedAppCount) app\(selectedAppCount == 1 ? "" : "s")")
+        }
+        if selectedCategoryCount > 0 {
+            parts.append("\(selectedCategoryCount) categor\(selectedCategoryCount == 1 ? "y" : "ies")")
+        }
+        if selectedWebDomainCount > 0 {
+            parts.append("\(selectedWebDomainCount) website\(selectedWebDomainCount == 1 ? "" : "s")")
+        }
+        return parts.joined(separator: ", ")
     }
 }
