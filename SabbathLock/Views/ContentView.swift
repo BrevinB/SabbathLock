@@ -26,7 +26,7 @@ struct ContentView: View {
                     Label("Settings", systemImage: "gear")
                 }
         }
-        .tint(.primary)
+        .tint(.indigo)
     }
 }
 

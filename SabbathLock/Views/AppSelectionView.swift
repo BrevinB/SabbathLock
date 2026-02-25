@@ -42,7 +42,7 @@ struct AppSelectionView: View {
         VStack(spacing: 8) {
             Image(systemName: "apps.iphone")
                 .font(.system(size: 48))
-                .foregroundStyle(.blue)
+                .foregroundStyle(.indigo)
 
             Text("Choose Apps to Restrict")
                 .font(.title3.bold())
@@ -58,43 +58,88 @@ struct AppSelectionView: View {
     // MARK: - Selection Summary
 
     private var selectionSummary: some View {
-        VStack(spacing: 12) {
-            HStack {
-                summaryItem(
-                    count: screenTimeManager.selectedAppCount,
-                    label: "Apps",
-                    icon: "app.fill",
-                    color: .blue
-                )
+        VStack(spacing: 0) {
+            if screenTimeManager.hasSelection {
+                // Total selection banner
+                HStack(spacing: 8) {
+                    Image(systemName: "checkmark.shield.fill")
+                        .foregroundStyle(.green)
+                    Text(screenTimeManager.selectionSummary)
+                        .font(.subheadline.bold())
+                    Spacer()
+                }
+                .padding()
+                .background(Color.green.opacity(0.1))
 
                 Divider()
-                    .frame(height: 40)
 
-                summaryItem(
-                    count: screenTimeManager.selectedCategoryCount,
-                    label: "Categories",
-                    icon: "square.grid.2x2.fill",
-                    color: .purple
-                )
+                // Breakdown row
+                HStack(spacing: 0) {
+                    summaryItem(
+                        count: screenTimeManager.selectedAppCount,
+                        label: "Apps",
+                        icon: "app.fill",
+                        color: .indigo
+                    )
+
+                    Divider()
+                        .frame(height: 40)
+
+                    summaryItem(
+                        count: screenTimeManager.selectedCategoryCount,
+                        label: "Categories",
+                        icon: "square.grid.2x2.fill",
+                        color: .purple
+                    )
+
+                    if screenTimeManager.selectedWebDomainCount > 0 {
+                        Divider()
+                            .frame(height: 40)
+
+                        summaryItem(
+                            count: screenTimeManager.selectedWebDomainCount,
+                            label: "Websites",
+                            icon: "globe",
+                            color: .orange
+                        )
+                    }
+                }
+                .padding(.vertical, 12)
+                .padding(.horizontal, 4)
+            } else {
+                // Empty state
+                VStack(spacing: 8) {
+                    Image(systemName: "app.dashed")
+                        .font(.title)
+                        .foregroundStyle(.secondary)
+                    Text("No apps or categories selected")
+                        .font(.subheadline)
+                        .foregroundStyle(.secondary)
+                    Text("Tap the button below to get started")
+                        .font(.caption)
+                        .foregroundStyle(.tertiary)
+                }
+                .padding(.vertical, 20)
+                .frame(maxWidth: .infinity)
             }
-            .padding()
-            .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
         }
+        .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
+        .clipShape(RoundedRectangle(cornerRadius: 16))
     }
 
     private func summaryItem(count: Int, label: String, icon: String, color: Color) -> some View {
-        HStack(spacing: 8) {
+        VStack(spacing: 4) {
             Image(systemName: icon)
-                .font(.title2)
+                .font(.title3)
                 .foregroundStyle(color)
 
-            VStack(alignment: .leading) {
-                Text("\(count)")
-                    .font(.title2.bold())
-                Text(label)
-                    .font(.caption)
-                    .foregroundStyle(.secondary)
-            }
+            Text("\(count)")
+                .font(.title2.bold())
+                .foregroundStyle(count > 0 ? .primary : .secondary)
+
+            Text(label)
+                .font(.caption)
+                .foregroundStyle(.secondary)
         }
         .frame(maxWidth: .infinity)
     }
@@ -108,17 +153,18 @@ struct AppSelectionView: View {
             } label: {
                 Label(
                     screenTimeManager.hasSelection ? "Modify Selection" : "Select Apps & Categories",
-                    systemImage: "checklist"
+                    systemImage: screenTimeManager.hasSelection ? "pencil" : "plus.circle.fill"
                 )
                 .font(.headline)
                 .frame(maxWidth: .infinity)
                 .padding()
             }
             .buttonStyle(.borderedProminent)
+            .tint(.indigo)
             .disabled(!screenTimeManager.isAuthorized)
 
             if !screenTimeManager.isAuthorized {
-                Text("Screen Time authorization is required to select apps.")
+                Label("Screen Time authorization is required to select apps.", systemImage: "exclamationmark.triangle.fill")
                     .font(.caption)
                     .foregroundStyle(.red)
             }
@@ -142,16 +188,19 @@ struct AppSelectionView: View {
 
             tipRow(
                 icon: "lightbulb.fill",
+                color: .yellow,
                 text: "Select entire categories like \"Social\" or \"Entertainment\" to block all related apps at once."
             )
 
             tipRow(
                 icon: "star.fill",
+                color: .indigo,
                 text: "Phone, Messages, and FaceTime can be individually selected to stay accessible."
             )
 
             tipRow(
                 icon: "arrow.clockwise",
+                color: .green,
                 text: "Your selection is saved and will persist between app launches."
             )
         }
@@ -159,10 +208,10 @@ struct AppSelectionView: View {
         .background(.regularMaterial, in: RoundedRectangle(cornerRadius: 16))
     }
 
-    private func tipRow(icon: String, text: String) -> some View {
+    private func tipRow(icon: String, color: Color, text: String) -> some View {
         HStack(alignment: .top, spacing: 10) {
             Image(systemName: icon)
-                .foregroundStyle(.yellow)
+                .foregroundStyle(color)
                 .frame(width: 20)
 
             Text(text)

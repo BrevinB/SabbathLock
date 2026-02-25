@@ -73,7 +73,7 @@ struct ScheduleView: View {
                     if !premiumManager.isPremium {
                         Text("Premium Feature")
                             .font(.caption)
-                            .foregroundStyle(.orange)
+                            .foregroundStyle(.indigo)
                     }
                 }
             }

@@ -130,7 +130,7 @@ struct HomeView: View {
             if !screenTimeManager.hasSelection {
                 infoRow(
                     icon: "app.badge",
-                    color: .blue,
+                    color: .indigo,
                     title: "No Apps Selected",
                     subtitle: "Go to the Apps tab to select apps to restrict."
                 )
@@ -181,7 +181,7 @@ struct HomeView: View {
     private var statusColor: Color {
         switch sabbathManager.state {
         case .active: return .green
-        case .scheduled: return .orange
+        case .scheduled: return .indigo
         case .inactive: return .secondary
         }
     }
@@ -205,8 +205,9 @@ struct HomeView: View {
     private var statusSubtitle: String {
         switch sabbathManager.state {
         case .active:
-            let count = screenTimeManager.selectedAppCount + screenTimeManager.selectedCategoryCount
-            return "\(count) app\(count == 1 ? "" : "s")/categor\(count == 1 ? "y" : "ies") restricted"
+            return screenTimeManager.hasSelection
+                ? "\(screenTimeManager.selectionSummary) restricted"
+                : "Sabbath mode is active"
         case .scheduled:
             return "Will activate automatically at the scheduled time"
         case .inactive:
