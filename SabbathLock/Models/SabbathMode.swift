@@ -13,6 +13,8 @@ struct SabbathModeConfig: Codable {
     var showShield: Bool = true
     /// Custom message to display on the shield
     var shieldMessage: String = "Shabbat Shalom! This app is locked during Sabbath."
+    /// Whether to show a Bible verse on the shield instead of the custom message
+    var showBibleVerse: Bool = true
     /// Whether to allow emergency calls
     var allowEmergencyCalls: Bool = true
     /// Whether to allow specific contacts

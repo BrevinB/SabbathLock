@@ -22,19 +22,31 @@ class SabbathShieldConfiguration: ShieldConfigurationDataSource {
     }
 
     private func buildShieldConfig() -> ShieldConfiguration {
-        let message = UserDefaults.standard.string(forKey: "ShieldMessage")
-            ?? "Shabbat Shalom! This app is locked during Sabbath."
+        let showBibleVerse = UserDefaults.standard.bool(forKey: "ShowBibleVerse")
+
+        let title: String
+        let subtitle: String
+
+        if showBibleVerse {
+            let verse = BibleVerse.random()
+            title = verse.reference
+            subtitle = verse.text
+        } else {
+            title = "Sabbath Mode"
+            subtitle = UserDefaults.standard.string(forKey: "ShieldMessage")
+                ?? "Shabbat Shalom! This app is locked during Sabbath."
+        }
 
         return ShieldConfiguration(
             backgroundBlurStyle: .systemUltraThinMaterial,
             backgroundColor: UIColor.systemBackground,
-            icon: UIImage(systemName: "moon.stars.fill"),
+            icon: UIImage(systemName: "book.closed.fill"),
             title: ShieldConfiguration.Label(
-                text: "Sabbath Mode",
+                text: title,
                 color: UIColor.label
             ),
             subtitle: ShieldConfiguration.Label(
-                text: message,
+                text: subtitle,
                 color: UIColor.secondaryLabel
             ),
             primaryButtonLabel: ShieldConfiguration.Label(

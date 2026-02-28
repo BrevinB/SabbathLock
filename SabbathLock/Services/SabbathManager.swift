@@ -155,5 +155,8 @@ class SabbathManager: ObservableObject {
         if let data = try? JSONEncoder().encode(config) {
             UserDefaults.standard.set(data, forKey: configKey)
         }
+        // Sync individual keys so the ShieldConfiguration extension can read them
+        UserDefaults.standard.set(config.shieldMessage, forKey: "ShieldMessage")
+        UserDefaults.standard.set(config.showBibleVerse, forKey: "ShowBibleVerse")
     }
 }

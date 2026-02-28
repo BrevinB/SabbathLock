@@ -31,6 +31,8 @@
 		A10001031 /* ShieldConfigurationExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A10000050 /* ShieldConfigurationExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
 		A10001040 /* ShieldActionExtension.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000060 /* ShieldActionExtension.swift */; };
 		A10001041 /* ShieldActionExtension.appex in Embed Foundation Extensions */ = {isa = PBXBuildFile; fileRef = A10000070 /* ShieldActionExtension.appex */; settings = {ATTRIBUTES = (RemoveHeadersOnCopy, ); }; };
+		A10001080 /* BibleVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000080 /* BibleVerse.swift */; };
+		A10001081 /* BibleVerse.swift in Sources */ = {isa = PBXBuildFile; fileRef = A10000080 /* BibleVerse.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -105,6 +107,7 @@
 		A10000061 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		A10000062 /* ShieldActionExtension.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = ShieldActionExtension.entitlements; sourceTree = "<group>"; };
 		A10000070 /* ShieldActionExtension.appex */ = {isa = PBXFileReference; explicitFileType = "wrapper.app-extension"; includeInIndex = 0; path = ShieldActionExtension.appex; sourceTree = BUILT_PRODUCTS_DIR; };
+		A10000080 /* BibleVerse.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BibleVerse.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -178,6 +181,7 @@
 			children = (
 				A10000010 /* SabbathSchedule.swift */,
 				A10000011 /* SabbathMode.swift */,
+				A10000080 /* BibleVerse.swift */,
 			);
 			path = Models;
 			sourceTree = "<group>";
@@ -411,6 +415,7 @@
 				A10001012 /* ScreenTimeManager.swift in Sources */,
 				A10001013 /* SabbathManager.swift in Sources */,
 				A10001014 /* PremiumManager.swift in Sources */,
+				A10001080 /* BibleVerse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -429,6 +434,7 @@
 			files = (
 				23C6F5082F47D33100631E87 /* SabbathMode.swift in Sources */,
 				A10001030 /* ShieldConfigurationExtension.swift in Sources */,
+				A10001081 /* BibleVerse.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

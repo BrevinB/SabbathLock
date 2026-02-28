@@ -82,15 +82,22 @@ struct SettingsView: View {
                     sabbathManager.persistConfig()
                 }
 
-            VStack(alignment: .leading, spacing: 4) {
-                Text("Shield Message")
-                    .font(.subheadline)
-                TextField("Enter shield message", text: $sabbathManager.config.shieldMessage)
-                    .textFieldStyle(.roundedBorder)
-                    .font(.caption)
-                    .onChange(of: sabbathManager.config.shieldMessage) { _, _ in
-                        sabbathManager.persistConfig()
-                    }
+            Toggle("Show Bible Verse", isOn: $sabbathManager.config.showBibleVerse)
+                .onChange(of: sabbathManager.config.showBibleVerse) { _, _ in
+                    sabbathManager.persistConfig()
+                }
+
+            if !sabbathManager.config.showBibleVerse {
+                VStack(alignment: .leading, spacing: 4) {
+                    Text("Shield Message")
+                        .font(.subheadline)
+                    TextField("Enter shield message", text: $sabbathManager.config.shieldMessage)
+                        .textFieldStyle(.roundedBorder)
+                        .font(.caption)
+                        .onChange(of: sabbathManager.config.shieldMessage) { _, _ in
+                            sabbathManager.persistConfig()
+                        }
+                }
             }
 
             Toggle("Allow Emergency Calls", isOn: $sabbathManager.config.allowEmergencyCalls)
@@ -100,7 +107,9 @@ struct SettingsView: View {
         } header: {
             Text("Shield Configuration")
         } footer: {
-            Text("Customize how blocked apps appear during Sabbath mode.")
+            Text(sabbathManager.config.showBibleVerse
+                 ? "A random Bible verse will appear when you open a blocked app."
+                 : "Customize how blocked apps appear during Sabbath mode.")
         }
     }
 
